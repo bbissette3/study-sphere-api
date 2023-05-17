@@ -1,15 +1,16 @@
+require("dotenv").config();
 const express = require("express");
-// const cors = require("cors");
+const cors = require("cors");
 // const bodyParser = require("body-parser");
 
 const app = express();
 
-// const corsOptions = {
-//   origin: "https://localhost:8080",
-// };
+const corsOptions = {
+  origin: "*",
+};
 
-//middleware
-// app.use(cors(corsOptions));
+// middleware;
+app.use(cors(corsOptions));
 
 app.use(express.json());
 
@@ -22,9 +23,19 @@ app.get("/", (req, resp) => {
 
 //all routes
 const userRouter = require("./routes/userRouter");
+const commentRouter = require("./routes/commentRouter");
+const focusSessionRouter = require("./routes/focusSessionRouter");
+const resourceRouter = require("./routes/resourceRouter");
+const topicRouter = require("./routes/topicRouter");
+const userTopicRouter = require("./routes/userTopicRouter");
 
 //use the routes for all request
 app.use("/api/users", userRouter);
+app.use("/api/comments", commentRouter);
+app.use("/api/focusSession", focusSessionRouter);
+app.use("/api/resources", resourceRouter);
+app.use("/api/topics", topicRouter);
+app.use("/api/userTopics", userTopicRouter);
 
 //port
 const PORT = process.env.PORT || 8888;

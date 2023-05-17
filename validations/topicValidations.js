@@ -1,6 +1,6 @@
 const { body } = require("express-validator");
 
-exports.createTopicValidation = [
+module.exports.createTopicValidation = [
   // title must not be empty
   body("title").notEmpty().withMessage("Title is required"),
   // subject must not be empty
@@ -9,7 +9,7 @@ exports.createTopicValidation = [
   body("description").notEmpty().withMessage("Description is required"),
 ];
 
-exports.updateTopicValidation = [
+module.exports.updateTopicValidation = [
   // title must not be empty
   body("title").notEmpty().withMessage("Title is required"),
   // subject must not be empty
