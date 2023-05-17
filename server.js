@@ -1,15 +1,15 @@
 const express = require("express");
-const cors = require("cors");
-const bodyParser = require("body-parser");
+// const cors = require("cors");
+// const bodyParser = require("body-parser");
 
 const app = express();
 
-const corsOptions = {
-  origin: "https://localhost:8080",
-};
+// const corsOptions = {
+//   origin: "https://localhost:8080",
+// };
 
 //middleware
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
 app.use(express.json());
 
