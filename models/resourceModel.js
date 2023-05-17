@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Resource = sequelize.define("resource", {
+  const Resource = sequelize.define("resources", {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: "topic",
+        model: "topics",
         key: "id",
       },
     },
