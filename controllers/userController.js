@@ -9,14 +9,14 @@ const {
 const db = require("../models");
 const User = db.users;
 
-// Sign up
+//signup
 const signUp = async (req, res) => {
   // Save User to Database
   try {
     const user = await User.create({
       username: req.body.username,
       email: req.body.email,
-      password: bcrypt.hashSync(req.body.password, 8),
+      password: req.body.password, // removed hashing
     });
     res.send({ message: "User registered successfully!" });
   } catch (err) {
@@ -37,8 +37,13 @@ const logIn = async (req, res) => {
     if (!user) {
       return res.status(404).send({ message: "User Not found." });
     }
+    console.log(user);
 
-    const passwordIsValid = bcrypt.compareSync(
+    // const passwordIsValid = bcrypt.compareSync(
+    //   req.body.password,
+    //   user.password
+    // );
+    const passwordIsValid = await bcrypt.compare(
       req.body.password,
       user.password
     );
@@ -47,10 +52,11 @@ const logIn = async (req, res) => {
       return res.status(401).send({
         accessToken: null,
         message: "Invalid Password!",
+        debug: "Password comparison failed", // Add this
       });
     }
 
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: user.id }, process.env.JWT_KEY, {
       expiresIn: 86400, // 24 hours
     });
 
