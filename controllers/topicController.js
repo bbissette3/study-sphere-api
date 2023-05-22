@@ -1,5 +1,5 @@
 const db = require("../models");
-const Topic = db.topics;
+const { topics: Topic, userTopics: UserTopic } = db;
 
 const getAllTopics = async (req, res) => {
   try {
@@ -17,9 +17,31 @@ const getAllTopics = async (req, res) => {
           model: db.users,
           as: "user",
         },
+      ],
+    });
+    res.send(topics);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ message: err.message });
+  }
+};
+
+const getUserTopics = async (req, res) => {
+  try {
+    const topics = await Topic.findAll({
+      where: { userId: req.userId },
+      include: [
+        {
+          model: db.resources,
+          as: "resources",
+        },
+        {
+          model: db.comments,
+          as: "comments",
+        },
         {
           model: db.users,
-          as: "usersInterested",
+          as: "user",
         },
       ],
     });
@@ -58,18 +80,23 @@ const getTopicById = async (req, res) => {
   }
 };
 
-const createTopic = async (req, res) => {
+const createTopic = async (req, res, next) => {
+  const { title, subject, description } = req.body;
+  const userId = req.userId;
   try {
     const topic = await Topic.create({
-      title: req.body.title,
-      subject: req.body.subject,
-      description: req.body.description,
-      userId: req.userId,
+      title,
+      subject,
+      description,
+      userId,
     });
-    res.status(201).send(topic);
-  } catch (err) {
-    console.log(err);
-    res.status(500).send({ message: err.message });
+    const userTopic = await UserTopic.create({
+      userId,
+      topicId: topic.id,
+    });
+    res.status(201).send({ topic, userTopic });
+  } catch (error) {
+    next(error);
   }
 };
 
@@ -105,6 +132,7 @@ module.exports = {
   createTopic,
   updateTopic,
   getAllTopics,
+  getUserTopics,
   getTopicById,
   deleteTopic,
 };

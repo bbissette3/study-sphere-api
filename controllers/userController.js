@@ -39,10 +39,6 @@ const logIn = async (req, res) => {
     }
     console.log(user);
 
-    // const passwordIsValid = bcrypt.compareSync(
-    //   req.body.password,
-    //   user.password
-    // );
     const passwordIsValid = await bcrypt.compare(
       req.body.password,
       user.password

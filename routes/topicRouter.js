@@ -12,7 +12,9 @@ topicRouter.post(
   topicController.createTopic
 );
 
-topicRouter.get("/", topicController.getAllTopics);
+topicRouter.get("/", verifyToken, topicController.getAllTopics);
+topicRouter.get("/", verifyToken, topicController.getUserTopics);
+
 topicRouter.get("/:id", topicController.getTopicById);
 topicRouter.put(
   "/:id",

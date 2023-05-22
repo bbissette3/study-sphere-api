@@ -25,13 +25,13 @@ module.exports = (sequelize, DataTypes) => {
 
   UserTopic.associate = function (models) {
     // Relationship with User
-    UserTopic.belongsTo(models.user, {
+    UserTopic.belongsTo(models.users, {
       foreignKey: "userId",
       as: "user",
     });
 
     // Relationship with Topic
-    UserTopic.belongsTo(models.topic, {
+    UserTopic.belongsTo(models.topics, {
       foreignKey: "topicId",
       as: "topic",
     });

@@ -33,13 +33,13 @@ module.exports = (sequelize, DataTypes) => {
 
   FocusSession.associate = function (models) {
     // Relationship with User
-    FocusSession.belongsTo(models.user, {
+    FocusSession.belongsTo(models.users, {
       foreignKey: "userId",
       as: "user",
     });
 
     // Relationship with Topic
-    FocusSession.belongsTo(models.topic, {
+    FocusSession.belongsTo(models.topics, {
       foreignKey: "topicId",
       as: "topic",
     });

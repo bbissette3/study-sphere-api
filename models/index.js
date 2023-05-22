@@ -32,7 +32,7 @@ db.users = require("./userModel.js")(sequelize, DataTypes);
 db.topics = require("./topicModel.js")(sequelize, DataTypes);
 db.comments = require("./commentModel.js")(sequelize, DataTypes);
 db.focusSession = require("./focusSessionModel.js")(sequelize, DataTypes);
-db.userTopic = require("./userTopicModel.js")(sequelize, DataTypes);
+db.userTopics = require("./userTopicModel.js")(sequelize, DataTypes);
 db.resources = require("./resourceModel.js")(sequelize, DataTypes);
 
 //loads the associated resources
