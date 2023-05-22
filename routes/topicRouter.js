@@ -13,7 +13,7 @@ topicRouter.post(
 );
 
 topicRouter.get("/", verifyToken, topicController.getAllTopics);
-topicRouter.get("/", verifyToken, topicController.getUserTopics);
+topicRouter.get("/user", verifyToken, topicController.getUserTopics);
 
 topicRouter.get("/:id", topicController.getTopicById);
 topicRouter.put(
