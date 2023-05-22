@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Resource.associate = function (models) {
     // Relationship with Topic
-    Resource.belongsTo(models.topic, {
+    Resource.belongsTo(models.topics, {
       foreignKey: "topicId",
       as: "topic",
     });

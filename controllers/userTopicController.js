@@ -2,6 +2,26 @@ const db = require("../models");
 
 const UserTopic = db.userTopic;
 
+//get UserTopics
+const getUserTopics = async (req, res) => {
+  try {
+    const userTopics = await db.UserTopic.findAll({
+      where: { userId: req.userId },
+      include: {
+        model: db.topic,
+        as: "topic",
+        include: {
+          model: db.resource,
+          as: "resources",
+        },
+      },
+    });
+    res.send(userTopics);
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+};
+
 // Add a User to a Topic
 const addUserToTopic = async (req, res) => {
   try {
@@ -34,4 +54,5 @@ const removeUserFromTopic = async (req, res) => {
 module.exports = {
   addUserToTopic,
   removeUserFromTopic,
+  getUserTopics,
 };

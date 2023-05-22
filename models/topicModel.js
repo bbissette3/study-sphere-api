@@ -28,19 +28,25 @@ module.exports = (sequelize, DataTypes) => {
 
   Topic.associate = function (models) {
     // Relationship with User
-    Topic.belongsTo(models.user, {
+    Topic.belongsTo(models.users, {
       foreignKey: "userId",
       as: "user",
     });
 
     // Relationship with Resource
-    Topic.hasMany(models.resource, {
+    Topic.hasMany(models.resources, {
       foreignKey: "topicId",
       as: "resources",
     });
 
+    // Relationship with Comment
+    Topic.hasMany(models.comments, {
+      foreignKey: "topicId",
+      as: "comments",
+    });
+
     // Relationship with User through UserTopic
-    Topic.belongsToMany(models.user, {
+    Topic.belongsToMany(models.users, {
       through: models.userTopic,
       foreignKey: "topicId",
       as: "usersInterested",

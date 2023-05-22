@@ -1,7 +1,7 @@
 const db = require("../models");
 
-const Resource = db.resource;
-const Topic = db.topic;
+const Resource = db.resources;
+const Topic = db.topics;
 
 // Create a new resource
 const createResource = async (req, res) => {

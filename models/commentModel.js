@@ -29,13 +29,13 @@ module.exports = (sequelize, DataTypes) => {
 
   Comment.associate = function (models) {
     // Relationship with User
-    Comment.belongsTo(models.user, {
+    Comment.belongsTo(models.users, {
       foreignKey: "userId",
       as: "user",
     });
 
     // Relationship with Topic
-    Comment.belongsTo(models.topic, {
+    Comment.belongsTo(models.topics, {
       foreignKey: "topicId",
       as: "topic",
     });

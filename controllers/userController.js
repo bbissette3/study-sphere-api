@@ -67,6 +67,7 @@ const logIn = async (req, res) => {
       accessToken: token,
     });
   } catch (err) {
+    console.error(err);
     res.status(500).send({ message: err.message });
   }
 };
@@ -103,9 +104,52 @@ const deleteUser = async (req, res) => {
   }
 };
 
+//just added this to try persistent user
+const verifyToken = async (req, res) => {
+  // Get the token from the request headers
+  const token = req.headers.authorization?.split(" ")[1];
+
+  if (!token) {
+    console.log("No token provided");
+    return res.status(403).json({ message: "No token provided" });
+  }
+
+  jwt.verify(token, process.env.JWT_KEY, async (err, decoded) => {
+    if (err) {
+      console.log("Invalid token");
+      return res.status(401).json({ message: "Invalid token" });
+    }
+
+    // Token is valid, get user details
+    try {
+      const user = await User.findOne({
+        where: {
+          id: decoded.id,
+        },
+      });
+
+      if (!user) {
+        console.log("User not found");
+        return res.status(404).send({ message: "User Not found." });
+      }
+      console.log("User found and response being sent");
+      res.status(200).send({
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        accessToken: token,
+      });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).send({ message: error.message });
+    }
+  });
+};
+
 module.exports = {
   signUp,
   logIn,
   updateUser,
   deleteUser,
+  verifyToken,
 };

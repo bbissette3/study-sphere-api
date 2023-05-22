@@ -29,11 +29,22 @@ db.sequelize = sequelize;
 
 //create property for each model
 db.users = require("./userModel.js")(sequelize, DataTypes);
-db.topic = require("./topicModel.js")(sequelize, DataTypes);
-db.comment = require("./commentModel.js")(sequelize, DataTypes);
+db.topics = require("./topicModel.js")(sequelize, DataTypes);
+db.comments = require("./commentModel.js")(sequelize, DataTypes);
 db.focusSession = require("./focusSessionModel.js")(sequelize, DataTypes);
 db.userTopic = require("./userTopicModel.js")(sequelize, DataTypes);
-db.resource = require("./resourceModel.js")(sequelize, DataTypes);
+db.resources = require("./resourceModel.js")(sequelize, DataTypes);
+
+//loads the associated resources
+Object.keys(db).forEach((modelName) => {
+  if (db[modelName].associate) {
+    try {
+      db[modelName].associate(db);
+    } catch (error) {
+      console.error(`Error on model ${modelName}:`, error);
+    }
+  }
+});
 
 //setting force to true, will cause loss of db data
 db.sequelize

@@ -24,4 +24,7 @@ userRouter.put(
 
 userRouter.delete("/:id", verifyToken, userController.deleteUser);
 
+//persistent user
+userRouter.get("/verifyToken", userController.verifyToken);
+
 module.exports = userRouter;

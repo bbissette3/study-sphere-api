@@ -4,6 +4,8 @@ const userTopicController = require("../controllers/userTopicController");
 
 const userTopicRouter = express.Router();
 
+userTopicRouter.get("/", verifyToken, userTopicController.getUserTopics);
+
 userTopicRouter.post(
   "/:topicId",
   verifyToken,

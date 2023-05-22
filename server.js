@@ -21,6 +21,11 @@ app.get("/", (req, resp) => {
   resp.json({ message: "Server is live" });
 });
 
+// app.use((req, res, next) => {
+//   console.log(`${new Date().toISOString()} - ${req.method} ${req.originalUrl}`);
+//   next();
+// });
+
 //all routes
 const userRouter = require("./routes/userRouter");
 const commentRouter = require("./routes/commentRouter");
@@ -58,6 +63,11 @@ const PORT = process.env.PORT || 8888;
 //     res.send({ message: "The password and hashed password do NOT match." });
 //   }
 // });
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send("Something broke!");
+});
 
 //server
 app.listen(PORT, (req, res) => {
