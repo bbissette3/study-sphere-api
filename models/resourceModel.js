@@ -5,10 +5,6 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       primaryKey: true,
     },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     url: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -33,6 +29,8 @@ module.exports = (sequelize, DataTypes) => {
       as: "topic",
     });
   };
+
+  // sequelize.getQueryInterface().removeColumn("resources", "name");
 
   return Resource;
 };

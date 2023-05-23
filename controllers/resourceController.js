@@ -6,7 +6,7 @@ const Topic = db.topics;
 // Create a new resource
 const createResource = async (req, res) => {
   try {
-    const { name, url, topicId } = req.body;
+    const { url, topicId } = req.body;
 
     // Check if the associated topic exists
     const topic = await Topic.findByPk(topicId);
@@ -15,7 +15,6 @@ const createResource = async (req, res) => {
     }
 
     const resource = await Resource.create({
-      name,
       url,
       topicId,
     });
@@ -53,11 +52,10 @@ const getResourceById = async (req, res) => {
 // Update a resource with id
 const updateResource = async (req, res) => {
   try {
-    const { name, url } = req.body;
+    const { url } = req.body;
 
     const resource = await Resource.update(
       {
-        name,
         url,
       },
       {

@@ -47,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
 
     // Relationship with User through UserTopic
     Topic.belongsToMany(models.users, {
-      through: models.userTopic,
+      through: models.userTopics,
       foreignKey: "topicId",
       as: "usersInterested",
     });
