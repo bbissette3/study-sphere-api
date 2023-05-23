@@ -66,7 +66,7 @@ const getTopicById = async (req, res) => {
         },
         {
           model: db.users,
-          as: "users",
+          as: "user",
         },
       ],
     });
