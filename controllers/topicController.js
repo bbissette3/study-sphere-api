@@ -1,9 +1,17 @@
 const db = require("../models");
+const { Op } = require("sequelize");
 const { topics: Topic, userTopics: UserTopic } = db;
 
 const getAllTopics = async (req, res) => {
   try {
+    const searchTerm = req.query.searchTerm || "";
     const topics = await Topic.findAll({
+      where: {
+        [Op.or]: [
+          { title: { [Op.like]: `%${searchTerm}%` } },
+          { subject: { [Op.like]: `%${searchTerm}%` } },
+        ],
+      },
       include: [
         {
           model: db.resources,
@@ -28,8 +36,15 @@ const getAllTopics = async (req, res) => {
 
 const getUserTopics = async (req, res) => {
   try {
+    const searchTerm = req.query.searchTerm || "";
     const topics = await Topic.findAll({
-      where: { userId: req.userId },
+      where: {
+        userId: req.userId,
+        [Op.or]: [
+          { title: { [Op.like]: `%${searchTerm}%` } },
+          { subject: { [Op.like]: `%${searchTerm}%` } },
+        ],
+      },
       include: [
         {
           model: db.resources,
@@ -54,12 +69,21 @@ const getUserTopics = async (req, res) => {
 
 const getUserSubscribedTopics = async (req, res) => {
   try {
+    const searchTerm = req.query.searchTerm || "";
     const userTopics = await UserTopic.findAll({
-      where: { userId: req.userId },
+      where: {
+        userId: req.userId,
+      },
       include: [
         {
           model: db.topics,
           as: "topic",
+          where: {
+            [Op.or]: [
+              { title: { [Op.like]: `%${searchTerm}%` } },
+              { subject: { [Op.like]: `%${searchTerm}%` } },
+            ],
+          },
           include: [
             {
               model: db.resources,
