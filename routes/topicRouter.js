@@ -15,6 +15,12 @@ topicRouter.post(
 topicRouter.get("/", verifyToken, topicController.getAllTopics);
 topicRouter.get("/user", verifyToken, topicController.getUserTopics);
 
+topicRouter.get(
+  "/user/subscribed",
+  verifyToken,
+  topicController.getUserSubscribedTopics
+);
+
 topicRouter.get("/:id", topicController.getTopicById);
 topicRouter.put(
   "/:id",

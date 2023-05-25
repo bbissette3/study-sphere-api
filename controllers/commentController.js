@@ -10,7 +10,7 @@ const createComment = async (req, res) => {
       userId: req.userId,
       topicId: req.params.topicId,
     });
-    res.send({ message: "Comment created successfully!" });
+    res.send(comment);
   } catch (err) {
     res.status(500).send({ message: err.message });
   }

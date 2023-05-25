@@ -1,6 +1,6 @@
 const db = require("../models");
 
-const UserTopic = db.userTopic;
+const UserTopic = db.userTopics;
 
 //get UserTopics
 const getUserTopics = async (req, res) => {
@@ -16,7 +16,7 @@ const getUserTopics = async (req, res) => {
         },
       },
     });
-    res.send(userTopics);
+    res.send({ message: "User added to the topic successfully!" });
   } catch (err) {
     res.status(500).send({ message: err.message });
   }
@@ -29,7 +29,7 @@ const addUserToTopic = async (req, res) => {
       userId: req.userId,
       topicId: req.params.topicId,
     });
-    res.send({ message: "User added to the topic successfully!" });
+    res.send(userTopic);
   } catch (err) {
     res.status(500).send({ message: err.message });
   }
@@ -51,8 +51,25 @@ const removeUserFromTopic = async (req, res) => {
   }
 };
 
+const checkUserSubscription = async (req, res) => {
+  try {
+    const userTopic = await UserTopic.findOne({
+      where: { userId: req.userId, topicId: req.params.topicId },
+    });
+
+    if (userTopic) {
+      res.send({ isSubscribed: true, topicId: req.params.topicId });
+    } else {
+      res.send({ isSubscribed: false, topicId: req.params.topicId });
+    }
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+};
+
 module.exports = {
   addUserToTopic,
   removeUserFromTopic,
   getUserTopics,
+  checkUserSubscription,
 };

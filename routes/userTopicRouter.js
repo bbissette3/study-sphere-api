@@ -17,4 +17,10 @@ userTopicRouter.delete(
   userTopicController.removeUserFromTopic
 );
 
+userTopicRouter.get(
+  "/:topicId/check",
+  verifyToken,
+  userTopicController.checkUserSubscription
+);
+
 module.exports = userTopicRouter;

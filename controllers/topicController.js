@@ -52,6 +52,39 @@ const getUserTopics = async (req, res) => {
   }
 };
 
+const getUserSubscribedTopics = async (req, res) => {
+  try {
+    const userTopics = await UserTopic.findAll({
+      where: { userId: req.userId },
+      include: [
+        {
+          model: db.topics,
+          as: "topic",
+          include: [
+            {
+              model: db.resources,
+              as: "resources",
+            },
+            {
+              model: db.comments,
+              as: "comments",
+            },
+            {
+              model: db.users,
+              as: "user",
+            },
+          ],
+        },
+      ],
+    });
+    const topics = userTopics.map((userTopic) => userTopic.topic);
+    res.send(topics);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ message: err.message });
+  }
+};
+
 const getTopicById = async (req, res) => {
   try {
     const topic = await Topic.findByPk(req.params.id, {
@@ -63,10 +96,18 @@ const getTopicById = async (req, res) => {
         {
           model: db.comments,
           as: "comments",
+          include: [
+            {
+              model: db.users,
+              as: "user",
+              attributes: ["username"],
+            },
+          ],
         },
         {
           model: db.users,
           as: "user",
+          attributes: ["username"],
         },
       ],
     });
@@ -135,4 +176,5 @@ module.exports = {
   getUserTopics,
   getTopicById,
   deleteTopic,
+  getUserSubscribedTopics,
 };
