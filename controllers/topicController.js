@@ -131,11 +131,7 @@ const createTopic = async (req, res, next) => {
       description,
       userId,
     });
-    const userTopic = await UserTopic.create({
-      userId,
-      topicId: topic.id,
-    });
-    res.status(201).send({ topic, userTopic });
+    res.status(201).send({ topic });
   } catch (error) {
     next(error);
   }
