@@ -1,5 +1,4 @@
 const db = require("../models");
-
 const FocusSession = db.focusSession;
 
 // Create a new Focus Session
@@ -11,19 +10,7 @@ const createFocusSession = async (req, res) => {
       learned: req.body.learned,
       toLearn: req.body.toLearn,
     });
-    res.send({ message: "Focus Session created successfully!" });
-  } catch (err) {
-    res.status(500).send({ message: err.message });
-  }
-};
-
-// Retrieve all Focus Sessions for a Topic
-const getAllFocusSessionsForTopic = async (req, res) => {
-  try {
-    const focusSessions = await FocusSession.findAll({
-      where: { topicId: req.params.topicId },
-    });
-    res.send(focusSessions);
+    res.send(focusSession);
   } catch (err) {
     res.status(500).send({ message: err.message });
   }
@@ -43,21 +30,19 @@ const getFocusSessionById = async (req, res) => {
   }
 };
 
-// Update a Focus Session with id
-const updateFocusSession = async (req, res) => {
+// Retrieve all Focus Sessions by User
+const getUserFocusSessions = async (req, res) => {
   try {
-    const focusSession = await FocusSession.update(
-      {
-        learned: req.body.learned,
-        toLearn: req.body.toLearn,
-      },
-      {
-        where: { id: req.params.id, userId: req.userId },
-      }
-    );
-    // ...
+    const focusSessions = await FocusSession.findAll({
+      where: { userId: req.userId },
+    });
+    if (focusSessions) {
+      res.send(focusSessions);
+    } else {
+      res.status(404).send({ message: "No Focus Sessions found for user" });
+    }
   } catch (err) {
-    // ...
+    res.status(500).send({ message: err.message });
   }
 };
 
@@ -67,16 +52,20 @@ const deleteFocusSession = async (req, res) => {
     const focusSession = await FocusSession.destroy({
       where: { id: req.params.id, userId: req.userId },
     });
-    // ...
+
+    if (focusSession) {
+      res.send({ message: "Focus Session deleted successfully!" });
+    } else {
+      res.status(404).send({ message: "Focus Session not found" });
+    }
   } catch (err) {
-    // ...
+    res.status(500).send({ message: err.message });
   }
 };
 
 module.exports = {
   createFocusSession,
-  getAllFocusSessionsForTopic,
   getFocusSessionById,
-  updateFocusSession,
+  getUserFocusSessions,
   deleteFocusSession,
 };

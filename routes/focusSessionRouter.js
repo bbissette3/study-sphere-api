@@ -9,20 +9,18 @@ focusSessionRouter.post(
   verifyToken,
   focusSessionController.createFocusSession
 );
-focusSessionRouter.get(
-  "/:topicId",
-  focusSessionController.getAllFocusSessionsForTopic
-);
+
 focusSessionRouter.get("/:id", focusSessionController.getFocusSessionById);
-focusSessionRouter.put(
-  "/:id",
-  verifyToken,
-  focusSessionController.updateFocusSession
-);
 focusSessionRouter.delete(
   "/:id",
   verifyToken,
   focusSessionController.deleteFocusSession
+);
+
+focusSessionRouter.get(
+  "/user",
+  verifyToken,
+  focusSessionController.getUserFocusSessions
 );
 
 module.exports = focusSessionRouter;
