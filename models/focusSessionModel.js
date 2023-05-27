@@ -29,6 +29,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       allowNull: true,
     },
+    duration: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   });
 
   FocusSession.associate = function (models) {
@@ -44,6 +48,10 @@ module.exports = (sequelize, DataTypes) => {
       as: "topic",
     });
   };
+
+  // sequelize
+  //   .getQueryInterface()
+  //   .addColumn("focusSessions", "duration", { type: DataTypes.INTEGER });
 
   return FocusSession;
 };

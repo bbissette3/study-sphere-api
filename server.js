@@ -37,7 +37,7 @@ const userTopicRouter = require("./routes/userTopicRouter");
 //use the routes for all request
 app.use("/api/users", userRouter);
 app.use("/api/comments", commentRouter);
-app.use("/api/focusSession", focusSessionRouter);
+app.use("/api/focusSessions", focusSessionRouter);
 app.use("/api/resources", resourceRouter);
 app.use("/api/topics", topicRouter);
 app.use("/api/userTopics", userTopicRouter);

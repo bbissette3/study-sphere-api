@@ -6,9 +6,10 @@ const createFocusSession = async (req, res) => {
   try {
     const focusSession = await FocusSession.create({
       userId: req.userId,
-      topicId: req.params.topicId,
+      topicId: req.body.topicId,
       learned: req.body.learned,
       toLearn: req.body.toLearn,
+      duration: req.body.duration,
     });
     res.send(focusSession);
   } catch (err) {

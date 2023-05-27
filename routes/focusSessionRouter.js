@@ -4,23 +4,24 @@ const focusSessionController = require("../controllers/focusSessionController");
 
 const focusSessionRouter = express.Router();
 
-focusSessionRouter.post(
-  "/:topicId",
+focusSessionRouter.get(
+  "/user",
   verifyToken,
-  focusSessionController.createFocusSession
+  focusSessionController.getUserFocusSessions
 );
 
 focusSessionRouter.get("/:id", focusSessionController.getFocusSessionById);
+
 focusSessionRouter.delete(
   "/:id",
   verifyToken,
   focusSessionController.deleteFocusSession
 );
 
-focusSessionRouter.get(
-  "/user",
+focusSessionRouter.post(
+  "/",
   verifyToken,
-  focusSessionController.getUserFocusSessions
+  focusSessionController.createFocusSession
 );
 
 module.exports = focusSessionRouter;
