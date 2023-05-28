@@ -8,8 +8,8 @@ const getAllTopics = async (req, res) => {
     const topics = await Topic.findAll({
       where: {
         [Op.or]: [
-          { title: { [Op.like]: `%${searchTerm}%` } },
-          { subject: { [Op.like]: `%${searchTerm}%` } },
+          { title: { [Op.iLike]: `%${searchTerm}%` } },
+          { subject: { [Op.iLike]: `%${searchTerm}%` } },
         ],
       },
       include: [
@@ -41,8 +41,8 @@ const getUserTopics = async (req, res) => {
       where: {
         userId: req.userId,
         [Op.or]: [
-          { title: { [Op.like]: `%${searchTerm}%` } },
-          { subject: { [Op.like]: `%${searchTerm}%` } },
+          { title: { [Op.iLike]: `%${searchTerm}%` } },
+          { subject: { [Op.iLike]: `%${searchTerm}%` } },
         ],
       },
       include: [
@@ -80,8 +80,8 @@ const getUserSubscribedTopics = async (req, res) => {
           as: "topic",
           where: {
             [Op.or]: [
-              { title: { [Op.like]: `%${searchTerm}%` } },
-              { subject: { [Op.like]: `%${searchTerm}%` } },
+              { title: { [Op.iLike]: `%${searchTerm}%` } },
+              { subject: { [Op.iLike]: `%${searchTerm}%` } },
             ],
           },
           include: [

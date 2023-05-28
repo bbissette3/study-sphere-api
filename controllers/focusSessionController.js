@@ -1,4 +1,5 @@
 const db = require("../models");
+const { Op } = require("sequelize");
 const FocusSession = db.focusSession;
 
 // Create a new Focus Session
@@ -31,15 +32,16 @@ const getFocusSessionById = async (req, res) => {
   }
 };
 
-// Retrieve all Focus Sessions by User
 const getUserFocusSessions = async (req, res) => {
   try {
+    const searchTerm = req.query.searchTerm || "";
     const focusSessions = await FocusSession.findAll({
       where: { userId: req.userId },
       include: [
         {
           model: db.topics,
           as: "topic",
+          where: { title: { [Op.iLike]: `%${searchTerm}%` } },
           attributes: ["title"],
         },
       ],
