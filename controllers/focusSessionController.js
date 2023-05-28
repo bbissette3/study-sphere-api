@@ -2,7 +2,6 @@ const db = require("../models");
 const { Op } = require("sequelize");
 const FocusSession = db.focusSession;
 
-// Create a new Focus Session
 const createFocusSession = async (req, res) => {
   try {
     const focusSession = await FocusSession.create({
@@ -12,7 +11,20 @@ const createFocusSession = async (req, res) => {
       toLearn: req.body.toLearn,
       duration: req.body.duration,
     });
-    res.send(focusSession);
+
+    // Fetch the newly created session with the associated topic's title
+    const sessionWithTopic = await FocusSession.findOne({
+      where: { id: focusSession.id },
+      include: [
+        {
+          model: db.topics,
+          as: "topic",
+          attributes: ["title"],
+        },
+      ],
+    });
+
+    res.send(sessionWithTopic);
   } catch (err) {
     res.status(500).send({ message: err.message });
   }
