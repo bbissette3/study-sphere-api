@@ -36,6 +36,13 @@ const getUserFocusSessions = async (req, res) => {
   try {
     const focusSessions = await FocusSession.findAll({
       where: { userId: req.userId },
+      include: [
+        {
+          model: db.topics,
+          as: "topic",
+          attributes: ["title"],
+        },
+      ],
     });
     if (focusSessions) {
       res.send(focusSessions);
