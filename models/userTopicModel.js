@@ -28,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     UserTopic.belongsTo(models.users, {
       foreignKey: "userId",
       as: "user",
+      onDelete: "CASCADE",
     });
 
     // Relationship with Topic

@@ -32,6 +32,32 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
+  User.associate = function (models) {
+    User.hasMany(models.topics, {
+      foreignKey: "userId",
+      as: "topics",
+      onDelete: "CASCADE",
+    });
+
+    User.hasMany(models.comments, {
+      foreignKey: "userId",
+      as: "comments",
+      onDelete: "CASCADE",
+    });
+
+    User.hasMany(models.focusSessions, {
+      foreignKey: "userId",
+      as: "focusSessions",
+      onDelete: "CASCADE",
+    });
+
+    User.hasMany(models.userTopics, {
+      foreignKey: "userId",
+      as: "userTopics",
+      onDelete: "CASCADE",
+    });
+  };
+
   //instance methods
   User.prototype.validPassword = function (password) {
     return bcrypt.compareSync(password, this.password);

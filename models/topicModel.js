@@ -31,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
     Topic.belongsTo(models.users, {
       foreignKey: "userId",
       as: "user",
+      onDelete: "CASCADE",
     });
 
     // Relationship with Resource

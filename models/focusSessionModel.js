@@ -40,6 +40,7 @@ module.exports = (sequelize, DataTypes) => {
     FocusSession.belongsTo(models.users, {
       foreignKey: "userId",
       as: "user",
+      onDelete: "CASCADE",
     });
 
     // Relationship with Topic

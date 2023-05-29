@@ -32,6 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     Comment.belongsTo(models.users, {
       foreignKey: "userId",
       as: "user",
+      onDelete: "CASCADE",
     });
 
     // Relationship with Topic
