@@ -41,6 +41,7 @@ Object.keys(db).forEach((modelName) => {
     try {
       db[modelName].associate(db);
     } catch (error) {
+      console.error("failure");
       console.error(`Error on model ${modelName}:`, error);
     }
   }
