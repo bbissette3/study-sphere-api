@@ -50,9 +50,5 @@ module.exports = (sequelize, DataTypes) => {
     });
   };
 
-  // sequelize
-  //   .getQueryInterface()
-  //   .addColumn("focusSessions", "duration", { type: DataTypes.INTEGER });
-
   return FocusSession;
 };

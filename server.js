@@ -21,11 +21,6 @@ app.get("/", (req, resp) => {
   resp.json({ message: "Server is live" });
 });
 
-// app.use((req, res, next) => {
-//   console.log(`${new Date().toISOString()} - ${req.method} ${req.originalUrl}`);
-//   next();
-// });
-
 //all routes
 const userRouter = require("./routes/userRouter");
 const commentRouter = require("./routes/commentRouter");
@@ -44,25 +39,6 @@ app.use("/api/userTopics", userTopicRouter);
 
 //port
 const PORT = process.env.PORT || 8888;
-
-// const bcrypt = require("bcrypt");
-
-// app.get("/bcrypt-test", async (req, res) => {
-//   const password = "123456";
-
-//   // Hash the password
-//   const saltRounds = 10;
-//   const hashedPassword = await bcrypt.hash(password, saltRounds);
-
-//   // Compare the password with the hashed password
-//   const match = await bcrypt.compare(password, hashedPassword);
-
-//   if (match) {
-//     res.send({ message: "The password and hashed password match." });
-//   } else {
-//     res.send({ message: "The password and hashed password do NOT match." });
-//   }
-// });
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

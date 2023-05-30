@@ -30,7 +30,4 @@ topicRouter.put(
 );
 topicRouter.delete("/:id", verifyToken, topicController.deleteTopic);
 
-// Get a topic by ID along with its resources
-// topicRouter.get("/:id/resources", topicController.getTopicWithResources);
-
 module.exports = topicRouter;

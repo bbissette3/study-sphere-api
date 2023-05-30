@@ -30,7 +30,5 @@ module.exports = (sequelize, DataTypes) => {
     });
   };
 
-  // sequelize.getQueryInterface().removeColumn("resources", "name");
-
   return Resource;
 };
