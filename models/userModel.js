@@ -53,7 +53,7 @@ module.exports = (sequelize, DataTypes) => {
 
     User.hasMany(models.userTopics, {
       foreignKey: "userId",
-      as: "userTopics",
+      as: "userTopic",
       onDelete: "CASCADE",
     });
   };

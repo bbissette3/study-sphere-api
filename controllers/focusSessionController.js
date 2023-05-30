@@ -1,6 +1,6 @@
 const db = require("../models");
 const { Op } = require("sequelize");
-const FocusSession = db.focusSession;
+const FocusSession = db.focusSessions;
 
 const createFocusSession = async (req, res) => {
   try {
