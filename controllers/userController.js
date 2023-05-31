@@ -20,7 +20,7 @@ const signUp = async (req, res) => {
     });
     res.send({ message: "User registered successfully!" });
   } catch (err) {
-    res.status(500).send({ message: err.message });
+    res.status(500).send({ error: err });
   }
 };
 
@@ -37,7 +37,6 @@ const logIn = async (req, res) => {
     if (!user) {
       return res.status(404).send({ message: "User Not found." });
     }
-    console.log(user);
 
     const passwordIsValid = await bcrypt.compare(
       req.body.password,
@@ -48,7 +47,7 @@ const logIn = async (req, res) => {
       return res.status(401).send({
         accessToken: null,
         message: "Invalid Password!",
-        debug: "Password comparison failed", // Add this
+        debug: "Password comparison failed",
       });
     }
 
@@ -63,8 +62,7 @@ const logIn = async (req, res) => {
       accessToken: token,
     });
   } catch (err) {
-    console.error(err);
-    res.status(500).send({ message: err.message });
+    res.status(500).send({ error: err });
   }
 };
 
@@ -83,8 +81,8 @@ const updateUser = [
       } else {
         res.status(200).send({ message: "User updated" });
       }
-    } catch (error) {
-      res.status(500).send({ message: error.message });
+    } catch (err) {
+      res.status(500).send({ error: err });
     }
   },
 ];
